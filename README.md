@@ -1,17 +1,36 @@
-# foto_max_visas
+# Foto Max Visas
 
-A new Flutter project.
+Aplicación móvil desarrollada en Flutter como proyecto académico.
 
-## Getting Started
+## Descripción
 
-This project is a starting point for a Flutter application.
+La aplicación permite al usuario ingresar un Application ID y preparar una consulta relacionada con el estado de una visa.
 
-A few resources to get you started if this is your first Flutter project:
+También incluye acceso directo al sitio oficial CEAC mediante el paquete externo `url_launcher`.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Tecnologías utilizadas
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter
+- Dart
+- Android Studio
+- Visual Studio Code
+- Git
+- GitHub
+
+## Funcionalidades
+
+- Interfaz desarrollada con Material Design.
+- Campo para ingresar Application ID.
+- Botón para consultar estado.
+- Mensaje dinámico mediante `setState`.
+- Acceso al sitio oficial CEAC.
+- Uso del paquete externo `url_launcher`.
+- Ejecución en emulador Android Pixel 7.
+
+## Control de versiones
+
+El proyecto fue desarrollado utilizando Git y GitHub, registrando los avances mediante diferentes commits.
+
+## Autor
+
+Carlos Andres Barberan
