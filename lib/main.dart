@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 void main() {
   runApp(const FotoMaxApp());
 }
@@ -34,12 +34,22 @@ class _ConsultaVisaPageState extends State<ConsultaVisaPage> {
   String mensaje = 'Ingresa tu número de solicitud para continuar.';
 
   void consultarEstado() {
+
+    
     setState(() {
       mensaje =
           'Consulta preparada. Puedes revisar el estado en el sitio oficial.';
     });
   }
+Future<void> abrirConsultaOficial() async {
+  final Uri url = Uri.parse(
+    'https://ceac.state.gov/CEACStatTracker/Status.aspx?App=NIV',
+  );
 
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('No se pudo abrir el sitio oficial.');
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,14 +109,24 @@ class _ConsultaVisaPageState extends State<ConsultaVisaPage> {
             const SizedBox(height: 20),
 
             ElevatedButton.icon(
-              onPressed: consultarEstado,
-              icon: const Icon(Icons.search),
-              label: const Text('Consultar estado'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-            ),
+  onPressed: consultarEstado,
+  icon: const Icon(Icons.search),
+  label: const Text('Consultar estado'),
+  style: ElevatedButton.styleFrom(
+    padding: const EdgeInsets.symmetric(vertical: 16),
+  ),
+),
 
+const SizedBox(height: 12),
+
+OutlinedButton.icon(
+  onPressed: abrirConsultaOficial,
+  icon: const Icon(Icons.open_in_new),
+  label: const Text('Ir al sitio oficial'),
+  style: OutlinedButton.styleFrom(
+    padding: const EdgeInsets.symmetric(vertical: 16),
+  ),
+),
             const SizedBox(height: 25),
 
             Card(
