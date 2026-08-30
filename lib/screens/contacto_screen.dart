@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactoScreen extends StatelessWidget {
   const ContactoScreen({super.key});
+  Future<void> abrirEnlace(
+  BuildContext context,
+  String direccion,
+) async {
+  final Uri url = Uri.parse(direccion);
+
+  final bool abierto = await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  );
+
+  if (!abierto && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('No se pudo abrir el enlace.'),
+      ),
+    );
+  }
+}
 
   void mostrarInformacion(BuildContext context) {
     showDialog(
@@ -109,6 +129,32 @@ class ContactoScreen extends StatelessWidget {
           const Divider(),
 
           const SizedBox(height: 20),
+          ElevatedButton.icon(
+  onPressed: () => abrirEnlace(
+    context,
+    'https://ceac.state.gov/CEACStatTracker/Status.aspx?App=NIV',
+  ),
+  icon: const Icon(Icons.open_in_new),
+  label: const Text('Consultar sitio oficial CEAC'),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: AppColors.primary,
+    foregroundColor: Colors.white,
+    padding: const EdgeInsets.symmetric(vertical: 16),
+  ),
+),
+
+const SizedBox(height: 12),
+
+OutlinedButton.icon(
+  onPressed: () => abrirEnlace(
+    context,
+    'https://travel.state.gov/content/travel/en/us-visas.html',
+  ),
+  icon: const Icon(Icons.public),
+  label: const Text('Información oficial sobre visas'),
+),
+
+const SizedBox(height: 12),
 
           ElevatedButton.icon(
             onPressed: () => mostrarInformacion(context),
