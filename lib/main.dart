@@ -32,15 +32,35 @@ class ConsultaVisaPage extends StatefulWidget {
 
 class _ConsultaVisaPageState extends State<ConsultaVisaPage> {
   String mensaje = 'Ingresa tu número de solicitud para continuar.';
+  final TextEditingController applicationIdController = TextEditingController();
 
-  void consultarEstado() {
+  Future<void> consultarEstado() async {
+  final applicationId = applicationIdController.text.trim();
 
-    
+  if (applicationId.isEmpty) {
     setState(() {
-      mensaje =
-          'Consulta preparada. Puedes revisar el estado en el sitio oficial.';
+      mensaje = 'Ingresa tu Application ID para continuar.';
+    });
+    return;
+  }
+
+  setState(() {
+    mensaje = 'Application ID ingresado: $applicationId';
+  });
+
+  final Uri url = Uri.parse(
+    'https://ceac.state.gov/CEACStatTracker/Status.aspx?App=NIV',
+  );
+
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    setState(() {
+      mensaje = 'No se pudo abrir el sitio oficial.';
     });
   }
+}
 Future<void> abrirConsultaOficial() async {
   final Uri url = Uri.parse(
     'https://ceac.state.gov/CEACStatTracker/Status.aspx?App=NIV',
@@ -67,11 +87,11 @@ Future<void> abrirConsultaOficial() async {
           children: [
             const SizedBox(height: 20),
 
-            const Icon(
-              Icons.flight_takeoff,
-              size: 80,
-              color: Color(0xFF1565C0),
-            ),
+            Image.asset(
+  'assets/icon/foto_max_logo.png',
+  height: 90,
+  fit: BoxFit.contain,
+),
 
             const SizedBox(height: 20),
 
@@ -97,7 +117,8 @@ Future<void> abrirConsultaOficial() async {
 
             const SizedBox(height: 30),
 
-            const TextField(
+            TextField(
+              controller: applicationIdController,
               decoration: InputDecoration(
                 labelText: 'Application ID',
                 hintText: 'Ejemplo: AA00ABC123',
