@@ -101,7 +101,7 @@ class _ServiciosScreenState extends State<ServiciosScreen> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  childAspectRatio: 0.78,
+                  childAspectRatio: 0.66,
                 ),
                 itemBuilder: (context, index) {
                   final servicio = servicios[index];
