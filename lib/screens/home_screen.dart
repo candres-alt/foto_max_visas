@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import 'consulta_screen.dart';
+import 'servicios_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -105,7 +106,14 @@ class HomeScreen extends StatelessWidget {
                 'Conoce los servicios disponibles.',
               ),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () => mostrarMensaje(context, 'Servicios'),
+              onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ServiciosScreen(),
+    ),
+  );
+},
             ),
           ),
 
