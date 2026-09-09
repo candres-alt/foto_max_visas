@@ -144,3 +144,65 @@ Navigator.push(
     builder: (context) => const ConsultaScreen(),
   ),
 );
+
+---
+
+# Actividad Integradora 3
+
+## Foto Max Visas - Provider y componentes reutilizables
+
+### Descripción
+
+Para esta actividad continué mejorando la aplicación **Foto Max Visas** desarrollada en las actividades anteriores.
+
+En esta versión organicé mejor el proyecto e implementé manejo de estado con el paquete **Provider**. La función principal trabajada fue el sistema de servicios favoritos, de manera que un cambio realizado en la pantalla de Servicios se refleja también en Favoritos y en la pantalla principal.
+
+### Objetivo
+
+Aplicar manejo de estado con Provider, separar el código según su responsabilidad, utilizar modelos de datos y crear componentes reutilizables sin concentrar toda la aplicación en `main.dart`.
+
+## Funcionalidades principales
+
+- Consulta de información relacionada con visas.
+- Acceso al sitio oficial CEAC.
+- Catálogo de servicios mediante `GridView.builder`.
+- Agregar y eliminar servicios favoritos.
+- Estado compartido entre las pantallas Servicios, Favoritos e Inicio.
+- Contador dinámico de servicios favoritos.
+- Pantalla de ayuda y recursos oficiales.
+- Navegación mediante `Navigator.push()` y `Navigator.pop()`.
+- Apertura de enlaces externos mediante `url_launcher`.
+
+## Tecnologías y paquetes utilizados
+
+- Flutter
+- Dart
+- Material Design
+- Git y GitHub
+- `provider`
+- `url_launcher`
+
+## Estructura del proyecto
+
+El código fue separado en carpetas de acuerdo con su responsabilidad:
+
+```text
+lib/
+├── constants/
+│   └── app_colors.dart
+├── data/
+│   └── services_data.dart
+├── models/
+│   └── service.dart
+├── providers/
+│   └── favorites_provider.dart
+├── screens/
+│   ├── consulta_screen.dart
+│   ├── contacto_screen.dart
+│   ├── favoritos_screen.dart
+│   ├── home_screen.dart
+│   └── servicios_screen.dart
+├── widgets/
+│   ├── favorite_button.dart
+│   └── service_card.dart
+└── main.dart
