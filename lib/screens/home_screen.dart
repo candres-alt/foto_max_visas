@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/app_colors.dart';
+import '../providers/favorites_provider.dart';
 import 'consulta_screen.dart';
 import 'servicios_screen.dart';
 import 'favoritos_screen.dart';
@@ -114,32 +116,61 @@ class HomeScreen extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          Card(
-            child: ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: AppColors.secondary,
-                child: Icon(
-                  Icons.favorite,
-                  color: Colors.white,
-                ),
-              ),
-              title: const Text(
-                'Favoritos',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: const Text(
-                'Consulta los servicios que has guardado.',
-              ),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FavoritosScreen(),
+          Consumer<FavoritesProvider>(
+            builder: (context, favoritesProvider, child) {
+              final int cantidad = favoritesProvider.favorites.length;
+
+              return Card(
+                child: ListTile(
+                  leading: const CircleAvatar(
+                    backgroundColor: AppColors.secondary,
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                    ),
                   ),
-                );
-              },
-            ),
+                  title: const Text(
+                    'Favoritos',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    cantidad == 0
+                        ? 'Todavía no tienes servicios guardados.'
+                        : cantidad == 1
+                            ? 'Tienes 1 servicio guardado.'
+                            : 'Tienes $cantidad servicios guardados.',
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (cantidad > 0)
+                        CircleAvatar(
+                          radius: 13,
+                          backgroundColor: AppColors.secondary,
+                          child: Text(
+                            '$cantidad',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FavoritosScreen(),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
 
           const SizedBox(height: 12),
