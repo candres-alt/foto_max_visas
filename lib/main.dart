@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'constants/app_colors.dart';
+import 'providers/favorites_provider.dart';
 import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const FotoMaxApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => FavoritesProvider(),
+      child: const FotoMaxApp(),
+    ),
+  );
 }
 
 class FotoMaxApp extends StatelessWidget {
