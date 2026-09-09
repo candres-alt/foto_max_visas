@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import 'consulta_screen.dart';
 import 'servicios_screen.dart';
+import 'favoritos_screen.dart';
 import 'contacto_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  void mostrarMensaje(BuildContext context, String opcion) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$opcion estará disponible en el siguiente paso.'),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +72,13 @@ class HomeScreen extends StatelessWidget {
               ),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const ConsultaScreen(),
-    ),
-  );
-},
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ConsultaScreen(),
+                  ),
+                );
+              },
             ),
           ),
 
@@ -108,13 +102,43 @@ class HomeScreen extends StatelessWidget {
               ),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const ServiciosScreen(),
-    ),
-  );
-},
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ServiciosScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          Card(
+            child: ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: AppColors.secondary,
+                child: Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                'Favoritos',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: const Text(
+                'Consulta los servicios que has guardado.',
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FavoritosScreen(),
+                  ),
+                );
+              },
             ),
           ),
 
@@ -138,13 +162,13 @@ class HomeScreen extends StatelessWidget {
               ),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const ContactoScreen(),
-    ),
-  );
-},
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ContactoScreen(),
+                  ),
+                );
+              },
             ),
           ),
 
