@@ -1,69 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../constants/app_colors.dart';
+import '../data/services_data.dart';
+import '../providers/favorites_provider.dart';
 import '../widgets/service_card.dart';
 
-class ServiciosScreen extends StatefulWidget {
+class ServiciosScreen extends StatelessWidget {
   const ServiciosScreen({super.key});
 
   @override
-  State<ServiciosScreen> createState() => _ServiciosScreenState();
-}
-
-class _ServiciosScreenState extends State<ServiciosScreen> {
-  final Set<int> favoritos = {};
-
-  void cambiarFavorito(int index, String nombre) {
-    setState(() {
-      if (favoritos.contains(index)) {
-        favoritos.remove(index);
-      } else {
-        favoritos.add(index);
-      }
-    });
-
-    final bool agregado = favoritos.contains(index);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          agregado
-              ? '$nombre agregado a favoritos.'
-              : '$nombre eliminado de favoritos.',
-        ),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final servicios = [
-      {
-        'title': 'Fotos para visa',
-        'description': 'Fotografías según requisitos del trámite.',
-        'icon': Icons.photo_camera,
-        'color': AppColors.primary,
-      },
-      {
-        'title': 'Formularios',
-        'description': 'Apoyo para organizar tu solicitud.',
-        'icon': Icons.description,
-        'color': AppColors.secondary,
-      },
-      {
-        'title': 'Orientación',
-        'description': 'Información general para tu proceso.',
-        'icon': Icons.travel_explore,
-        'color': AppColors.primary,
-      },
-      {
-        'title': 'Documentos',
-        'description': 'Organización de documentos importantes.',
-        'icon': Icons.folder_copy,
-        'color': AppColors.secondary,
-      },
-    ];
-
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -94,28 +41,46 @@ class _ServiciosScreenState extends State<ServiciosScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: GridView.builder(
-                itemCount: servicios.length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.66,
-                ),
-                itemBuilder: (context, index) {
-                  final servicio = servicios[index];
-
-                  return ServiceCard(
-                    title: servicio['title'] as String,
-                    description: servicio['description'] as String,
-                    icon: servicio['icon'] as IconData,
-                    color: servicio['color'] as Color,
-                    isFavorite: favoritos.contains(index),
-                    onFavorite: () => cambiarFavorito(
-                      index,
-                      servicio['title'] as String,
+              child: Consumer<FavoritesProvider>(
+                builder: (context, favoritesProvider, child) {
+                  return GridView.builder(
+                    itemCount: servicesData.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 0.66,
                     ),
+                    itemBuilder: (context, index) {
+                      final service = servicesData[index];
+
+                      return ServiceCard(
+                        title: service.title,
+                        description: service.description,
+                        icon: service.icon,
+                        color: service.color,
+                        isFavorite:
+                            favoritesProvider.isFavorite(service),
+                        onFavorite: () {
+                          final bool wasFavorite =
+                              favoritesProvider.isFavorite(service);
+
+                          favoritesProvider.toggleFavorite(service);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                wasFavorite
+                                    ? '${service.title} eliminado de favoritos.'
+                                    : '${service.title} agregado a favoritos.',
+                              ),
+                              duration: const Duration(seconds: 2),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               ),
