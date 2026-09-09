@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
+import 'favorite_button.dart';
 
 class ServiceCard extends StatelessWidget {
   final String title;
@@ -33,12 +35,9 @@ class ServiceCard extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.topRight,
-              child: IconButton(
+              child: FavoriteButton(
+                isFavorite: isFavorite,
                 onPressed: onFavorite,
-                icon: Icon(
-                  isFavorite ? Icons.favorite : Icons.favorite_border,
-                  color: isFavorite ? AppColors.secondary : Colors.grey,
-                ),
               ),
             ),
             CircleAvatar(
